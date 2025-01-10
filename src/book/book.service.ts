@@ -26,7 +26,10 @@ export class BookService {
             }
         } : {}
 
-        const books = await this.bookModel.find({...keyword}).limit(resPerPage).skip(skip)
+        const books = await this.bookModel
+        .find({...keyword})
+        .limit(resPerPage)
+        .skip(skip)
         return books;
     }
 
