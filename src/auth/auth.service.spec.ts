@@ -54,7 +54,8 @@ describe('AuthService', () => {
         const signUpDto = {
             name: 'Samantha',
             email: 'admin123@gmail.com',
-            password: '123456'
+            password: '123456',
+            role: 'user'
         }
         it('should register the new user', async() => {
             jest.spyOn(bcrypt,'hash').mockResolvedValue('hashedPassword')

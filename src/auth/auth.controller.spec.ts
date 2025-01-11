@@ -49,7 +49,8 @@ import { AuthController } from "./auth.controller"
             const signUpDto = {
                 name: 'Samantha',
                 email: 'admin123@gmail.com',
-                password: '123456'
+                password: '123456',
+                role : 'user'
             }
 
             const result = await authController.signUp(signUpDto)
