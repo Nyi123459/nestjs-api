@@ -5,6 +5,7 @@ import * as mongoose from 'mongoose';
 
 import {Query} from 'express-serve-static-core';
 import { User } from '../auth/schema/user.schema';
+import { uploadImages } from 'src/util/aws';
 
 
 @Injectable()
@@ -64,5 +65,22 @@ export class BookService {
     async deleteById(id:string): Promise<{deleted: boolean}>{
          await this.bookModel.findByIdAndDelete(id);
          return {deleted : true}
+    }
+
+    async uploadImages(id: string, files: Array<Express.Multer.File>) {
+        const book = await this.bookModel.findById(id);
+
+        if(!book) {
+            throw new NotFoundException('Book not found.');
+        }
+
+        const images = await uploadImages(files)
+
+        book.images = images as object[];
+
+        await book.save();
+
+        return book;
+
     }
 }
