@@ -10,11 +10,15 @@ import { Roles } from 'src/auth/decorators/roles.decorators';
 import { Role } from 'src/auth/enums/role.enums';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { SkipThrottle, Throttle } from '@nestjs/throttler';
 
 @Controller('book')
 export class BookController {
     constructor(private bookService: BookService) {}
 
+
+    // @SkipThrottle()  //skip this route from using Throttler
+    // @Throttle({ default: {limit: 1, ttl: 2000}}) //one request per 2 seconds
     @Get()
     @Roles(Role.Moderator, Role.Admin, Role.User)
     @UseGuards(AuthGuard(), RolesGuard)
